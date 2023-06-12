@@ -1,0 +1,16 @@
+.contactLists {
+    width: 328px;
+}
+
+.contactListItem {
+    list-style: url(./phone.svg);
+
+}
+
+
+
+.userName {
+    width: 150px;
+}
+
+
