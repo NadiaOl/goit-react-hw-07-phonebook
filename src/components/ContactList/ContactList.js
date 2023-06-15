@@ -10,8 +10,8 @@ export const ContactList = () =>{
     const contacts = useSelector(getContacts);
     const filteredContactsList = useSelector(getValueFilter);
     const dispatch = useDispatch();
-      const isLoading = useSelector(getIsLoading);
-  const error = useSelector(getError);
+    const isLoading = useSelector(getIsLoading);
+    const error = useSelector(getError);
 
     useEffect(() => {
         dispatch(fetchContacts());
@@ -22,7 +22,7 @@ export const ContactList = () =>{
     );
 
     const visibleContacts = filteredContactsList ? filteredContacts : contacts
-
+console.log('visibleContacts', filteredContacts)
     return (
         <div>
             {isLoading && <p>Loading tasks...</p>}
@@ -31,7 +31,7 @@ export const ContactList = () =>{
                 {visibleContacts.map((contact) =>
                     <li className={css.contactListItem}
                         key={contact.id}>
-                        <Contact contact={contact}/>
+                        <Contact contact={contacts}/>
                     </li>
                 )}
             </ul>
