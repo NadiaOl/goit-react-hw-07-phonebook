@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import { fetchContacts, addContact, deleteContact } from './operations';
 
 const initialState = {
@@ -14,34 +15,37 @@ const handlePending = state => {
   };
 };
 
-const handleRejected = (state, action) => {
+const handleRejected = (state, {payload}) => {
   return {
-    ...state,
+    // ...state,
     isLoading: false,
-    error: action.payload,
+    error: payload,
   };
 };
 
-
-const handleFetchContactsSuccess = (state, action) => {
-  return { ...state, isLoading: false, error: null, items: action.payload };
-};
-
-const handleAddContactSuccess = (state, action) => {
+const handleFulfilled = (state) => {
   return {
-    ...state,
-    isLoading: false,
-    error: null,
-    items: [action.payload, ...state.items],
+    isLoading: false, 
+    error: null, 
+  }
+}
+
+const handleFetchContactsSuccess = (state, {payload}) => {
+  handleFulfilled()
+  return{
+    items: payload }};
+
+const handleAddContactSuccess = (state, {payload}) => {
+  handleFulfilled()
+  return {
+    items: [payload, ...state.items],
   };
 };
 
-const handleDeleteContactSuccess = (state, action) => {
+const handleDeleteContactSuccess = (state, {payload}) => {
+  handleFulfilled()
   return {
-    ...state,
-    isLoading: false,
-    error: null,
-    items: state.items.filter(item => item.id !== action.payload.id),
+    items: state.items.filter(item => item.id !== payload.id),
   };
 };
 
@@ -49,17 +53,17 @@ const handleDeleteContactSuccess = (state, action) => {
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
-  extraReducers: {
-    [fetchContacts.pending]: handlePending,
-    [addContact.pending]: handlePending,
-    [deleteContact.pending]: handlePending,
-    [fetchContacts.rejected]: handleRejected,
-    [addContact.rejected]: handleRejected,
-    [deleteContact.rejected]: handleRejected,
-    [fetchContacts.fulfilled]: handleFetchContactsSuccess,
-    [addContact.fulfilled]: handleAddContactSuccess,
-    [deleteContact.fulfilled]: handleDeleteContactSuccess,
-  },
-});
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchContacts.pending, handlePending)
+      .addCase(addContact.pending, handlePending)
+      .addCase(deleteContact.pending, handlePending)
+      .addCase(fetchContacts.rejected, handleRejected)
+      .addCase(addContact.rejected, handleRejected)
+      .addCase(deleteContact.rejected, handleRejected)
+      .addCase(fetchContacts.fulfilled, handleFetchContactsSuccess)
+      .addCase(addContact.fulfilled, handleAddContactSuccess)
+      .addCase(deleteContact.fulfilled, handleDeleteContactSuccess)
+}});
 
 export const contactsReducer = contactsSlice.reducer;
