@@ -1,41 +1,41 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.defaults.baseURL = "https://64880bf10e2469c038fcd6c2.mockapi.io";
+axios.defaults.baseURL = 'https://64880bf10e2469c038fcd6c2.mockapi.io/'; 
 
 export const fetchContacts = createAsyncThunk(
-    "contacts/fetchAll",
-    async (text, thunkAPI) => {
-        try {
-            const response = await axios.get("/contacts", { text });
-            console.log('response.data', response.data)
-            return response.data;
-        } catch (e) {
-            return thunkAPI.rejectWithValue(e.message);
-        }
+  'contacts/fetchAll',
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get('/contacts');
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-)
+  }
+);
 
 export const addContact = createAsyncThunk(
-    "contacts/addContact",
-    async (text, thunkAPI) => {
+  'contacts/addContact',
+  async (contact, thunkAPI) => {
     try {
-        const response = await axios.post("/contacts", { text });
-        return response.data;
-    } catch (e) {
-        return thunkAPI.rejectWithValue(e.message);
+      const response = await axios.post('/contacts', contact);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-    }
+  }
 );
 
 export const deleteContact = createAsyncThunk(
-    "contacts/deleteContact",
-    async (contactsId, thunkAPI) => {
+  'contacts/deleteContact',
+  async (contactId, thunkAPI) => {
     try {
-        const response = await axios.delete(`/contacts/${contactsId}`);
-        return response.data;
-    } catch (e) {
-        return thunkAPI.rejectWithValue(e.message);
+      const response = await axios.delete(`/contacts/${contactId}`); 
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-    }
+  }
 );
+

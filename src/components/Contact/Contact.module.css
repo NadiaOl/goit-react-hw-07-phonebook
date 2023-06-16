@@ -4,7 +4,15 @@
     align-items: center;
     height: 30px;
     margin-bottom: 8px;
-    gap: 22px;
+    /* gap: 10px; */
+}
+.contactsConteiner {
+    display: flex;
+
+    width: 100%;
+}
+.contactsConteiner > p {
+width: 50%;
 }
 
 .listButton {

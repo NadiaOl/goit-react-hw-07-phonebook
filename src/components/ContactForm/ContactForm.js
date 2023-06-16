@@ -1,14 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getContacts } from "redux/selectors";
-
-import css from './ContactForm.module.css';
+import { selectContacts } from "redux/selectors";
 import { addContact } from "redux/operations";
-
-
+import css from './ContactForm.module.css';
 
 export const ContactForm = () => {
     const dispatch = useDispatch();
-    const contacts = useSelector(getContacts)
+    const contacts = useSelector(selectContacts)
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -17,7 +14,7 @@ export const ContactForm = () => {
         if (contacts.find(contact => contact.name.toLowerCase() === formName.toLowerCase())) {
             return  alert(`${formName} is already in contacts`);
         } 
-        dispatch(addContact({name: formName, number: formNumber}));
+        dispatch(addContact({name: formName, phone: formNumber}));
         event.target.reset();
     }
     return (
@@ -26,7 +23,7 @@ export const ContactForm = () => {
                 <input className={css.phonebookInput}
                     type="text"
                     name="name"
-                    // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+                    pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
                     title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
                     required />
             </label>
@@ -34,7 +31,7 @@ export const ContactForm = () => {
                 <input className={css.phonebookInput}
                     type="tel"
                     name="number"
-                    // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+                    pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
                     title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
                     required />
             </label>
