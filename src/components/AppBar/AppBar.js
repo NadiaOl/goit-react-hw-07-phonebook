@@ -4,7 +4,7 @@ import {ContactList} from '../ContactList/ContactList';
 import {Filter} from '../Filter/Filter'
 import css from './AppBar.module.css';
 import { selectIsLoading } from 'redux/selectors';
-import { RingLoader } from "react-spinners";
+import { CircleLoader  } from "react-spinners";
 
 export const AppBar = () => {
       const isLoading = useSelector(selectIsLoading);
@@ -15,8 +15,8 @@ export const AppBar = () => {
                         
       <ContactForm />
       <Filter />
-      <h3 className={css.phonebookSubTitle}>{isLoading ? <RingLoader color="#b61a77"
-      size={20}/> : <p>Contacts</p>}</h3>
+      <h3 className={css.phonebookSubTitle}>{isLoading ? <CircleLoader  color="#b61a77"
+        size={20}/> : <p>Contacts</p>}</h3>
       <ContactList />
     </div>
   )
